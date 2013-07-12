@@ -76,3 +76,8 @@ Download Valgrind's [source archive](http://valgrind.org/downloads/) and extract
 If everything works, compiled files will be written to `android/data/local/valdroid` under the base source folder.
 
 If you get errors about undefined number types (`uint32_t` etc), open header file `$HOME/bin/android-14-ndk-4.7/sysroot/usr/include/elf.h`, add a line `#include <sys/types.h>` before `#include <sys/exec_elf.h>` (somewhere around line 55), clean the project with `make clean` and try again. If the thought of fiddling with toolchain-wide headers bothers you, know that I completely understand how you feel, and I don't care.
+
+Notes
+=====
+
+After you get Valgrind running your logical next step is getting some tools to make sense of output files. See [here](http://valgrind.org/downloads/guis.html) for a list of GUI display tools. A binary build of [KCacheGrind](http://kcachegrind.sourceforge.net/html/Home.html) for Windows is availble [here](http://sourceforge.net/projects/precompiledbin/).
