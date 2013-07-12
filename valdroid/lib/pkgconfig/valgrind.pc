@@ -1,0 +1,16 @@
+prefix=/data/local/valdroid
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/valgrind
+arch=arm
+os=linux
+platform=arm-linux
+valt_load_address=@VALT_LOAD_ADDRESS@
+
+Name: Valgrind
+Description: A dynamic binary instrumentation framework
+Version: 3.8.1
+Requires:
+Libs: -L${libdir}/valgrind -lcoregrind-arm-linux -lvex-arm-linux -lgcc
+Cflags: -I${includedir}
+
