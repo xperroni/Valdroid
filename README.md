@@ -5,9 +5,9 @@ Valdroid 3.8.1 / r8e
 
 This version was built from Valgrind 3.8.1 using the Android NDK r8e toolchain on Linux 32 bits.
 
-Valdroid is meant as a convenience to Android NDK developers working with plain native executables, who might be looking for a quick setup in order to profile their applications. However I provide **no guarantees** this will work for you, other than that I use it myself and it does work for me. In case of problems I am *not* the person to ask for help, all I did was follow the steps from Valgrind's [Android README](http://valgrind.org/docs/manual/dist.readme-android.html) with minor variations; if it doesn't work your guesses are as good as mine, and you'd better contact the [Valgrind community](http://valgrind.org/support/summary.html) for support.
+Valdroid is meant as a convenience to Android NDK developers working with plain native executables, who might be looking for a quick setup in order to profile their applications. However I provide **no guarantees** this will work for you, other than that I use it myself and it does work for me. It goes without saying **I am not in any way associated to Valgrind,** I'm just a random user sharing a solution to a problem I had. In case of problems I am *not* the person to ask for help, all I did was follow the steps from Valgrind's [Android README](http://valgrind.org/docs/manual/dist.readme-android.html) with minor variations; if it doesn't work your guesses are as good as mine, and you'd better contact the [Valgrind community](http://valgrind.org/support/summary.html) for support.
 
-That said I have tried to make this manual reasonably sound and document all pitfalls I met along the way; if something else pops up on future releases, I'll make a point to keep you updated. Also if you find a problem not described here and figure a solution to it, I'd appreciate if you could share it. I am happy to help others working out problems I have already faced, just don't expect me to solve your problem if it isn't my problem too.
+That said I have tried to make this manual reasonably sound and document all pitfalls I met along the way; if something else pops up on future releases, I'll make a point to keep it updated. Also if you find a problem not described here and figure a solution to it, I'd appreciate if you could share it. I am happy to pass along solutions to problems I have already faced, just don't expect me to bother with your problem if it isn't my problem too.
 
 Usage
 -----
@@ -22,9 +22,11 @@ Clone the repository, open a command prompt to its base folder and type the comm
     adb shell chmod 777 /data/local/valdroid/bin/*
     adb shell chmod 777 /data/local/valdroid/lib/valgrind/*-arm-linux
 
-Now, assuming your application `foo` is in folder `/data/local` and you want to use `callgrind` to profile its runtime performance, the command below will start it in profile mode with initial arguments `--bar=fubar`:
+Now, assuming your application `foo` is in folder `/data/local` and you want to use `callgrind` to profile its runtime performance, the command below will start it in profile mode with initial argument `--bar=fubar`:
 
-    adb shell "/data/local/valdroid/bin/valgrind --callgrind-out-file=/data/local/callgrind.out --tool=callgrind /data/local/foo --bar=fubar"
+    adb shell /data/local/valdroid/bin/valgrind \
+        --callgrind-out-file=/data/local/callgrind.out \
+        --tool=callgrind /data/local/foo --bar=fubar
 
 During application startup you may see the message below:
 
@@ -43,16 +45,16 @@ Build from Source
 
 As I mentioned before Valgrind's [Android README](http://valgrind.org/docs/manual/dist.readme-android.html) is the authoritative reference on how to build Valgrind for Android. I have however introduced my own variations to the process, which I document below.
 
-*As already noted I have used [version r8e](http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86.tar.bz2) of the Android NDK for this build. I have no idea whether the steps below will work for other versions.*
+*As already noted I have used* [version r8e](http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86.tar.bz2) *of the Android NDK for this build. I have no idea whether the steps below will work for other versions.*
 
-1. Download the [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) toolchain and extract it to `$HOME/bin`;
-1. Run the command below to create a new stand-alone toolchain:
-   mkdir -p $HOME/bin/android-14-ndk-4.7; \
-   $HOME/bin/android-ndk-r8e/build/tools/make-standalone-toolchain.sh \
-       --toolchain=arm-linux-androideabi-4.7 --platform=android-14 \
-       --install-dir=$HOME/bin/android-14-ndk-4.7
-1. Download Valgrind's [source archive](http://valgrind.org/downloads/), extract it and open a prompt to the extracted folder;
-1. Run the commands below:
+Download the [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) toolchain and extract it to `$HOME/bin`, then run the commands below to create a new stand-alone toolchain:
+
+    mkdir -p $HOME/bin/android-14-ndk-4.7
+    $HOME/bin/android-ndk-r8e/build/tools/make-standalone-toolchain.sh \
+        --toolchain=arm-linux-androideabi-4.7 --platform=android-14 \
+        --install-dir=$HOME/bin/android-14-ndk-4.7
+
+Download Valgrind's [source archive](http://valgrind.org/downloads/) and extract it. Open a prompt to the extracted folder and type the commands below:
 
     NDK=$HOME/bin/android-14-ndk-4.7
     BIN=$NDK/bin
